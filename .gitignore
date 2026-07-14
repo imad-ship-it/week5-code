@@ -1,0 +1,6 @@
+venv/
+.env
+__pycache__/
+*.pyc
+tool_calls.log
+.ruff_cache/

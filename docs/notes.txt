@@ -1,0 +1,3 @@
+Project notes — internship research
+Our team is evaluating the AI company Anthropic for a case study.
+Imad prefers summaries under 100 words.
