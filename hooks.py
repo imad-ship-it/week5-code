@@ -49,22 +49,24 @@ def fire(event_name: str, **payload) -> None:
 
 
 # ---------------- Built-in logging hooks ----------------
-def log_pre_tool(tool_name, arguments, **_):
+def log_pre_tool(tool_name, arguments, agent="agent", **_):
     log_event(
         {
             "ts": _timestamp(),
             "event": "pre_tool",
+            "agent": agent,
             "tool": tool_name,
             "args": arguments,
         }
     )
 
 
-def log_post_tool(tool_name, arguments, result, duration_s, error=None, **_):
+def log_post_tool(tool_name, arguments, result, duration_s, error=None, agent="agent", **_):
     log_event(
         {
             "ts": _timestamp(),
             "event": "post_tool",
+            "agent": agent,
             "tool": tool_name,
             "args": arguments,
             "duration_s": round(duration_s, 3),

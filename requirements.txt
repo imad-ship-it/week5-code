@@ -2,3 +2,5 @@ openai
 python-dotenv
 ddgs
 pre-commit
+pypdf
+mcp[cli]
