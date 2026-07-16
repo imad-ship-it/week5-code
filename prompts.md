@@ -36,6 +36,24 @@
   preference found in the notes. Confirmed the full hand-off chain in
   tool_calls.log via the agent field.
 
+## Week 5, Day 3 — Structured outputs (schema guards + retry)
+- Built structured_report.py: wraps the supervisor's free-text answer into
+  a validated FinalReport (Pydantic) — answer, workers_used, key_facts
+  (min 1), confidence (0.0–1.0 enforced via ge/le).
+- Guardrail chain: DeepSeek JSON mode (response_format json_object) forces
+  syntactically valid JSON, but syntactic != schema-valid — the Pydantic
+  model_validate_json call is the real guard. On ValidationError the model
+  is shown its own broken JSON plus the error and retries (max 2); after
+  that, a safe fallback FinalReport (confidence 0.0) is returned instead
+  of crashing downstream code.
+- Verified live: multi-hop question (notes_worker found the company,
+  researcher found the CEO) came back as a typed FinalReport first try —
+  no retries needed. Tool calls traced in tool_calls.log as usual.
+- Also finalized the Phase 3 project proposal (project_proposal.md):
+  fixed encoding artifacts, resolved a PostGIS/SQLite contradiction
+  (plain lat/long + Haversine instead), added MCP + hooks/tracing to the
+  primitives list, swapped OpenRouter for the already-integrated DeepSeek.
+
 ## Day 2 — Web search skill
 - Provider: DeepSeek (deepseek-chat), OpenAI-compatible API.
 - Tool: web_search(query) via DuckDuckGo (ddgs) — keyless, chosen
